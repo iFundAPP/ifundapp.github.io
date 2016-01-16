@@ -1,57 +1,348 @@
-<html><head>
 
-    <meta charset="utf-8">
+<!DOCTYPE html>
+<html ng-app="IFundDigital">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>iFund | Log in</title>
+    <title>iFundCorp | FundSearch Results</title>
 
-    <link href="/Content/bootstrap.min.css" rel="stylesheet">
-    <link href="/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <!-- Add local styles, mostly for plugins css file -->
 
-    <link href="/Content/animate.css" rel="stylesheet">
-    <link href="/Content/style.css" rel="stylesheet">
+    <!-- Add jQuery Style direct - used for jQGrid plugin -->
+    <link href="/Scripts/plugins/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    <!-- Primary Inspinia style -->
+    <link href="/Content/bootstrap.min.css" rel="stylesheet"/>
+<link href="/Content/animate.css" rel="stylesheet"/>
+<link href="/Content/style.css" rel="stylesheet"/>
+
+    <link href="/fonts/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+
+
+    <!-- iFund style -->
+    <link href="/Content-IFund/css/Site.css" rel="stylesheet"/>
+
+    <link href="/Content-IFund/font/fonts.css" rel="stylesheet"/>
+
 
 </head>
 
-<body class="gray-bg">
 
-    <div class="middle-box text-center loginscreen animated fadeInDown" ng-app="register" ng-controller="validateController">
-        <div class="ifund-brand">
-        </div>
-        <h3>Welcome to iFund</h3>
-        <p>
-            Login to access your account and services.
-        </p>
-        <section id="loginForm">
-<form action="/Account/Login" class="m-t" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="pfOrEotg9olWM76bCAbfrx61h_Ov36jGSp2OLaElJNjUTB5jZGi2FX_XzFcWJgZoworauGFy17YFFjMtjn9Byj2vmYM55msiOL7ZnNZB2ds1">                <div class="form-group">
-                    <input class="form-control" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Email" name="Email" placeholder="E-mail" type="text" value="">
-                    <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                </div>
-                <div class="form-group">
-                    <input class="form-control" data-val="true" data-val-required="The Password field is required." id="Password" name="Password" placeholder="Password" type="password">
-                    <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-                </div>
-                <div class="form-group">
-                    <input data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true"><input name="RememberMe" type="hidden" value="false">
-                    <label for="RememberMe">Remember me?</label>
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-                <p>
-                    <a href="/Account/ForgotPassword">Forgot your password?</a>
-                </p>
-                <a class="btn btn-sm btn-white btn-block" href="/Account/Register">Register new account</a>
-</form>        </section>
-        <!--
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                
-            </section>
-        </div>
-        -->
+
+<body class="" ng-app="myApp" id="SearchResultView">
+
+    <div class='ticker-marquee' ng-controller="topMarqueeController">
+        <ul class="slideContainer" marquee>
+            <li class="slideItem" ng-repeat="item in model.marqueeItems">
+                <span ng-bind="item.title"></span>&nbsp;&nbsp;<span ng-bind="item.total"></span>&nbsp;&nbsp;<span ng-if="item.updown == 'up'"><i class="fa fa-caret-up" style="color: lightgreen; font-size:12px;"></i></span><span ng-if="item.updown == 'down'"><i class="fa fa-caret-down" style="color:orangered; font-size:12px;"></i></span>&nbsp;<span ng-bind="item.diff"></span> 
+            </li>
+        </ul>
     </div>
 
-    <script src="/bundles/jqueryval"></script>
+    
+
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="SearchResult" ng-controller = fundSearchResultController>
+        
+
+        
+
+
+    <div class="left-sidebar" id="left-sidebar" height-to-bottom> 
+        
+         
+
+        
+        <div class="left-sidebar-container">
+
+            
+            <div class="campaign-search-form-container">
+                <div class="campaign-search-form-header">Search Campaigns </div>
+
+                <form role="form" ng-submit="processSearchForm()">
+                    <div class="form-group">
+                        <label>Are you</label>
+                        <select class="form-control m-b" name="account" ng-model="model.searchQuery.areYou">
+                            <option value="All">All</option>
+                            <option value ="option 1">option 1</option>
+                            <option value="option 2">option 2</option>
+                            <option value="option 3">option 3</option>
+                            <option value="option 4">option 4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <select class="form-control m-b" name="account" ng-model="model.searchQuery.country">
+                            <option value="All">All Countries</option>
+                            <option value="option 1">option 1</optionvalue>
+                            <option value="option 2">option 2</option>
+                            <option value="option 3">option 3</option>
+                            <option value="option 4">option 4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control m-b" name="account" ng-model="model.searchQuery.category">
+                            <option value="All">All Categories</option>
+                            <option value="option 1">option 1</optionvalue>
+                            <option value="option 2">option 2</option>
+                            <option value="option 3">option 3</option>
+                            <option value="option 4">option 4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Platform Type</label>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.debt"> Debt</label></div>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.donation"> Donation</label></div>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.equity"> Equity</label></div>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.reward"> Reward</label></div>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.royalty"> Royalty</label></div>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.realEstate"> Real Estate</label></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Campaign Type</label>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.campaign.allOrNothing"> All or Nothing</label></div>
+                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.campaign.keepWhatYouRaised"> Keep what you Raised</label></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm" style="display:block; width:100%;"><i class="fa fa-search pull-left" style="margin-top: 2px; margin-right: -20px;"></i>Search</button>
+
+                    <div class="campaign-search-form-footer">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu tristique ex, ornare rhoncus enim.
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
-</body></html>
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg dashboard-1">
+
+            <!-- Top Navbar -->
+
+
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-fixed-top" role="navigation" >
+        <div class="navbar-container">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed " type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+
+                        <button aria-controls="navbar" class="search-toggle" left-sidebar-show-hide type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+             
+                <a href="#" class="ifund-brand"></a>
+            </div>
+
+
+            <ul class="register-login-buttons">
+                <li style="margin-right:2px;">
+                    <a class="btn btn-primary btn-sm" href="/Home/Login">Login</a>
+                </li>
+                <li>
+                    <a class="btn btn-primary btn-sm" href="/Home/Register">Register</a>
+                </li>
+
+            </ul>
+            <div class="navbar-collapse collapse navbar-right " id="navbar">
+
+                <ul class="nav navbar-nav">
+                    <li class="hidden-md hidden-lg">
+                        <a role="button" href="#" style="color:#1ab394 !important;"><i class="fa fa-user"></i>&nbsp;&nbsp;LOGIN</a>
+                    </li>
+                    <li class="hidden-md hidden-lg">
+                        <a role="button" href="#" style="color:#1ab394 !important;"><i class="fa fa-key"></i>&nbsp;&nbsp;REGISTER</a>
+                    </li>
+
+                    <li>
+                        <a role="button" href="#">DEBT / P2P</a>
+                    </li>
+                    <li>
+                        <a role="button" href="#">DONATE</a>
+                    </li>
+                    <li>
+                        <a role="button" href="#">EQUITY</a>
+                    </li>
+                    <li>
+                        <a href="/RealEstate" role="button">REAL ESTATE</a>
+                    </li>
+                    <li>
+                        <a role="button" href="#">REWARD</a>
+                    </li>
+                    <li>
+                        <a role="button" href="#">ROYALTY</a>
+                    </li>
+                    
+
+
+
+                    <li class="hidden-md hidden-lg navbar-collapse-top-border">
+                        <a role="button" href="#">PRIVACY POLICY</a>
+                    </li>
+                    <li class="hidden-md hidden-lg">
+                        <a role="button" href="#">TERMS OF USE</a>
+                    </li>
+                    <li class=" hidden-md hidden-lg">
+                        <a role="button" href="#">CONTACT US</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</div>
+            <!-- Main view  -->
+            
+
+
+
+<div class="row">
+    <div class="col-lg-12 text-center search-results-title">
+        <div class="navy-line"></div>
+        <h1>Campaign Search Results</h1>
+        <div class="result-counter">
+            <strong class="navy">Lorem Ipsum</strong><br />
+            76,571
+        </div>
+        <div class="result-counter">
+            <strong class="navy">Dolor</strong><br />
+            9,292
+        </div>
+        <div class="result-counter">
+            <strong class="navy">Sit Amet</strong><br />
+            286
+        </div>
+        <div class="result-counter">
+            <strong class="navy">Availability</strong><br />
+            134 Available
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12 text-center" style="padding-bottom:160px;">
+        <div class="campaign-search-result-container hide" ng-class="{'show': model.searchResults.length > 0}"> 
+           
+
+            
+
+            <div class="campaign-search-result-item" ng-repeat="item in model.searchResults | offset: currentPage*itemsPerPage | limitTo: itemsPerPage" ">
+                <div class=" top-title"><span ng-bind="item.TopTitle"></span><div class="label pull-right" ng-class="item.TopStatusClass" ng-bind="item.TopStatusText"></div></div>
+            <div class="preview-img"><img class="img-responsive" src="{{item.ImageURL}}" /></div>
+            <div class="body-title"><span ng-bind="item.Title"></span><div class="body-title-sub" ng-bind="item.SubTitle"></div></div>
+            <div class="body-description" ng-bind="item.Description"></div>
+            <div class="body-stat"><div class="text-left">Efficitur nec</div><div class="text-right" ng-bind="item.Data1"></div></div>
+            <div class="body-stat"><div class="text-left">Porta elit</div><div class="text-right" ng-bind="item.Data2"></div></div>
+            <div class="body-stat"><div class="text-left">Porta elit</div><div class="text-right" ng-bind="item.Data3"></div></div>
+        </div>
+
+        <div class="text-center" style=" margin-top: 30px; margin-bottom: 60px; ">
+            <div class="btn-group">
+                <button class="btn btn-white" type="button" ng-class="prevPageDisabled()" ng-click="prevPage()"><i class=" fa fa-chevron-left"></i></button>
+                <button class="btn btn-white" ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">{{n+1}}</button>
+                <button class="btn btn-white" ng-class="nextPageDisabled()" type="button" ng-click="nextPage()"><i class=" fa fa-chevron-right"></i> </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+            <div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer-column-social">
+                    <ul>
+                        <li><a href="javascript:void(0);"><i class="fa fa-rss-square"></i></a></li>
+                        <li><a href="javascript:void(0);"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="javascript:void(0);"><i class="fa fa-twitter-square"></i></a></li>
+                        <li><a href="javascript:void(0);"><i class="fa fa-google-plus-square"></i></a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <ul>
+                        <li class="hidden-xs hidden-sm">
+                            <a href="javascript:void(0);">Privacy Policy</a>
+                        </li>
+                        <li class="hidden-xs hidden-sm">
+                            <a href="javascript:void(0);">Terms of Use</a>
+                        </li>
+                        <li class="hidden-xs hidden-sm">
+                            <a href="javascript:void(0);">Contact Us</a>
+                        </li>
+                        <li class="footer-hidden-tiny" style="padding-right:0;">
+                            &copy;2015 IFUNDWORLD
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        </div>
+        <!-- End page wrapper-->
+        <!-- Right Sidebar -->
+
+    </div>
+    <!-- End wrapper-->
+    <!-- Section for main scripts render -->
+    <script src="/Scripts/jquery-2.1.4.js"></script>
+
+    <script src="/Scripts/angular.min.js"></script>
+<script src="/Scripts/angular-resource.js"></script>
+<script src="/Scripts/angular-route.js"></script>
+
+    <script src="/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+
+
+    
+    <script src="/Content-IFund/js/app.js"></script>
+    <script src="/Content-IFund/js/services/references.js"></script>
+    <script src="/Content-IFund/js/directives/transparentNavBar.js"></script>
+    <script src="/Content-IFund/js/directives/inPageScroll.js"></script>
+    <script src="/Content-IFund/js/directives/leftSidebarCollapseExpand.js"></script>
+    <script src="/Content-IFund/js/directives/marquee.js"></script>
+    <script src="/Content-IFund/js/directives/heightToBottom.js"></script>
+    <script src="/Content-IFund/js/directives/leftSidebarShowHide.js"></script>
+    <script src="/Content-IFund/js/filters/offset.js"></script>
+
+    <script src="/Content-IFund/js/controllers/topMarqueeController.js"></script>
+
+
+    <script src="/Scripts/bootstrap.min.js"></script>
+
+    <script src="/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
+<script src="/Scripts/app/inspinia.min.js"></script>
+
+
+    <!-- Handler for local scripts -->
+    
+    <!--<script src="~/Content-IFund/js/services/references.js"></script>-->
+    <script src="/Content-IFund/js/controllers/fundSearchResultController.js"></script>
+
+
+
+
+
+</body>
+
+</html>
