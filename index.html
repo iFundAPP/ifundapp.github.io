@@ -1,1 +1,168 @@
-Hello World
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="INIT" id="62" x="52" y="55">
+    <statement name="INIT">
+      <block type="COMMENT" id="63">
+        <field name="NOTE">*** An Ethereum smart contract to sell a website for "5000 by March"</field>
+        <next>
+          <block type="COMMENT" id="64">
+            <field name="NOTE">First, store buyer's ethereum address:</field>
+            <next>
+              <block type="STORE" id="65" inline="true">
+                <field name="POOL">sstore</field>
+                <value name="SPOT">
+                  <block type="VAL" id="66">
+                    <field name="VAL">BUYER</field>
+                  </block>
+                </value>
+                <value name="VAL">
+                  <block type="VAL" id="67">
+                    <field name="VAL">0x6af26739b9ffef8aa2985252e5357fde</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="COMMENT" id="68">
+                    <field name="NOTE">Then, store seller's ethereum address:</field>
+                    <next>
+                      <block type="STORE" id="69" inline="true">
+                        <field name="POOL">sstore</field>
+                        <value name="SPOT">
+                          <block type="VAL" id="70">
+                            <field name="VAL">SELLER</field>
+                          </block>
+                        </value>
+                        <value name="VAL">
+                          <block type="VAL" id="71">
+                            <field name="VAL">0xfeab802c014588f08bfee2741086c375</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="COMMENT" id="72">
+                            <field name="NOTE">April 1, 2014 is 1396310400 in "computer time"</field>
+                            <next>
+                              <block type="STORE" id="73" inline="true">
+                                <field name="POOL">sstore</field>
+                                <value name="SPOT">
+                                  <block type="VAL" id="74">
+                                    <field name="VAL">DEADLINE</field>
+                                  </block>
+                                </value>
+                                <value name="VAL">
+                                  <block type="VAL" id="75">
+                                    <field name="VAL">1396310400</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="BODY">
+      <block type="COMMENT" id="76">
+        <field name="NOTE">If the agreed amount is received on time...</field>
+        <next>
+          <block type="WHEN" id="77" inline="false">
+            <field name="WORD">when</field>
+            <value name="COND">
+              <block type="LOGIC" id="78" inline="false">
+                <field name="OP">and</field>
+                <value name="A">
+                  <block type="COMPARE" id="79" inline="true">
+                    <field name="OP">&gt;=</field>
+                    <value name="A">
+                      <block type="CONTRACT" id="80">
+                        <field name="PROP">balance</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="CURRENCY" id="81" inline="true">
+                        <field name="DENOM">ether</field>
+                        <value name="AMT">
+                          <block type="VAL" id="82">
+                            <field name="VAL">5000</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="COMPARE" id="83" inline="true">
+                    <field name="OP">&lt;=</field>
+                    <value name="A">
+                      <block type="BLOCKINFO" id="84">
+                        <field name="PROP">timestamp</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="LOAD" id="85" inline="true">
+                        <field name="POOL">sload</field>
+                        <value name="SPOT">
+                          <block type="VAL" id="86">
+                            <field name="VAL">DEADLINE</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="THEN">
+              <block type="COMMENT" id="87">
+                <field name="NOTE">... then designate the buyer as the new website admin and pay the seller</field>
+                <next>
+                  <block type="STORE" id="88" inline="true">
+                    <field name="POOL">sstore</field>
+                    <value name="SPOT">
+                      <block type="VAL" id="89">
+                        <field name="VAL">WEBSITE_ADMIN</field>
+                      </block>
+                    </value>
+                    <value name="VAL">
+                      <block type="LOAD" id="90" inline="true">
+                        <field name="POOL">sload</field>
+                        <value name="SPOT">
+                          <block type="VAL" id="91">
+                            <field name="VAL">BUYER</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="SPEND" id="92" inline="true">
+                        <value name="AMOUNT">
+                          <block type="CONTRACT" id="93">
+                            <field name="PROP">balance</field>
+                          </block>
+                        </value>
+                        <value name="TO">
+                          <block type="LOAD" id="94" inline="true">
+                            <field name="POOL">sload</field>
+                            <value name="SPOT">
+                              <block type="VAL" id="95">
+                                <field name="VAL">SELLER</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
