@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>iFundCorp | FundSearch Results</title>
+    <title>iFundCorp | FundSearch</title>
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <!-- Add local styles, mostly for plugins css file -->
@@ -33,7 +33,7 @@
 
 
 
-<body class="" ng-app="myApp" id="SearchResultView">
+<body class="top-navigation" ng-app="myApp" id="SearchView">
 
     <div class='ticker-marquee' ng-controller="topMarqueeController">
         <ul class="slideContainer" marquee>
@@ -44,102 +44,80 @@
     </div>
 
     
-
-    <!-- Wrapper-->
-    <!-- PageClass give you ability to specify custom style for specific view based on action -->
-    <div id="wrapper" class="SearchResult" ng-controller = fundSearchResultController>
-        
-
-        
-
-
-    <div class="left-sidebar" id="left-sidebar" height-to-bottom> 
-        
-         
-
-        
-        <div class="left-sidebar-container">
-
-            
-            <div class="campaign-search-form-container">
-                <div class="campaign-search-form-header">Search Campaigns </div>
-
-                <form role="form" ng-submit="processSearchForm()">
-                    <div class="form-group">
-                        <label>Are you</label>
-                        <select class="form-control m-b" name="account" ng-model="model.searchQuery.areYou">
-                            <option value="All">All</option>
-                            <option value ="option 1">option 1</option>
-                            <option value="option 2">option 2</option>
-                            <option value="option 3">option 3</option>
-                            <option value="option 4">option 4</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Country</label>
-                        <select class="form-control m-b" name="account" ng-model="model.searchQuery.country">
-                            <option value="All">All Countries</option>
-                            <option value="option 1">option 1</optionvalue>
-                            <option value="option 2">option 2</option>
-                            <option value="option 3">option 3</option>
-                            <option value="option 4">option 4</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select class="form-control m-b" name="account" ng-model="model.searchQuery.category">
-                            <option value="All">All Categories</option>
-                            <option value="option 1">option 1</optionvalue>
-                            <option value="option 2">option 2</option>
-                            <option value="option 3">option 3</option>
-                            <option value="option 4">option 4</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Platform Type</label>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.debt"> Debt</label></div>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.donation"> Donation</label></div>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.equity"> Equity</label></div>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.reward"> Reward</label></div>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.royalty"> Royalty</label></div>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.platform.realEstate"> Real Estate</label></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Campaign Type</label>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.campaign.allOrNothing"> All or Nothing</label></div>
-                        <div class="checkbox"><label> <input type="checkbox" ng-model="model.searchQuery.campaign.keepWhatYouRaised"> Keep what you Raised</label></div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-sm" style="display:block; width:100%;"><i class="fa fa-search pull-left" style="margin-top: 2px; margin-right: -20px;"></i>Search</button>
-
-                    <div class="campaign-search-form-footer">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu tristique ex, ornare rhoncus enim.
-                    </div>
-
-                </form>
+    <canvas id="spiders" class="hidden-xs" style="width:100%;height:100%; position:absolute;"></canvas>
+    <div class="home-search-bkrd" style="padding-top:40px" ng-controller="fundSearchController">
+        <div class="home-search-title"></div>
+        <form role="form" ng-submit="processSearchForm()">
+            <div class="home-search-input form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter a Campaign or Company name..." ng-model="model.searchQuery.campaignOrCompanyName"> <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">
+                            Search
+                        </button>
+                    </span>
+                </div>
             </div>
+        </form>
+
+        <div class="home-search-abc">
+            <a href="#" ng-click="processSearchFormLetter('A'); $event.stopPropagation()">A</a>
+            <a href="#" ng-click="processSearchFormLetter('B'); $event.stopPropagation()">B</a>
+            <a href="#" ng-click="processSearchFormLetter('C'); $event.stopPropagation()">C</a>
+            <a href="#" ng-click="processSearchFormLetter('D'); $event.stopPropagation()">D</a>
+            <a href="#" ng-click="processSearchFormLetter('E'); $event.stopPropagation()">E</a>
+            <a href="#" ng-click="processSearchFormLetter('F'); $event.stopPropagation()">F</a>
+            <a href="#" ng-click="processSearchFormLetter('G'); $event.stopPropagation()">G</a>
+            <a href="#" ng-click="processSearchFormLetter('H'); $event.stopPropagation()">H</a>
+            <a href="#" ng-click="processSearchFormLetter('I'); $event.stopPropagation()">I</a>
+            <a href="#" ng-click="processSearchFormLetter('J'); $event.stopPropagation()">J</a>
+            <a href="#" ng-click="processSearchFormLetter('K'); $event.stopPropagation()">K</a>
+            <a href="#" ng-click="processSearchFormLetter('L'); $event.stopPropagation()">L</a>
+            <a href="#" ng-click="processSearchFormLetter('M'); $event.stopPropagation()">M</a>
+            <a href="#" ng-click="processSearchFormLetter('N'); $event.stopPropagation()">N</a>
+            <a href="#" ng-click="processSearchFormLetter('O'); $event.stopPropagation()">O</a>
+            <a href="#" ng-click="processSearchFormLetter('P'); $event.stopPropagation()">P</a>
+            <a href="#" ng-click="processSearchFormLetter('Q'); $event.stopPropagation()">Q</a>
+            <a href="#" ng-click="processSearchFormLetter('R'); $event.stopPropagation()">R</a>
+            <a href="#" ng-click="processSearchFormLetter('S'); $event.stopPropagation()">S</a>
+            <a href="#" ng-click="processSearchFormLetter('T'); $event.stopPropagation()">T</a>
+            <a href="#" ng-click="processSearchFormLetter('U'); $event.stopPropagation()">U</a>
+            <a href="#" ng-click="processSearchFormLetter('V'); $event.stopPropagation()">V</a>
+            <a href="#" ng-click="processSearchFormLetter('W'); $event.stopPropagation()">W</a>
+            <a href="#" ng-click="processSearchFormLetter('X'); $event.stopPropagation()">X</a>
+            <a href="#" ng-click="processSearchFormLetter('Y'); $event.stopPropagation()">Y</a>
+            <a href="#" ng-click="processSearchFormLetter('Z'); $event.stopPropagation()">Z</a>
         </div>
+
+
+
+        <a href="javascript:void(0);" class="home-search-chevron" in-page-scroll="#wrapper"></a>
+
+
     </div>
 
 
 
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="Search" >
+        
+
+        
+
         <!-- Page wraper -->
-        <div id="page-wrapper" class="gray-bg dashboard-1">
+        <div id="page-wrapper" class="gray-bg">
 
             <!-- Top Navbar -->
 
 
 <div class="row border-bottom white-bg">
-    <nav class="navbar navbar-fixed-top" role="navigation" >
+    <nav class="navbar navbar-fixed-top no-background" role="navigation" transparent-nav-bar>
         <div class="navbar-container">
             <div class="navbar-header">
                 <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed " type="button">
                     <i class="fa fa-reorder"></i>
                 </button>
 
-                        <button aria-controls="navbar" class="search-toggle" left-sidebar-show-hide type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
              
                 <a href="#" class="ifund-brand"></a>
             </div>
@@ -206,59 +184,80 @@
 
 
 
-<div class="row">
-    <div class="col-lg-12 text-center search-results-title">
+
+
+<div class="container funding-domains" style="padding-bottom:100px">
+
+   
+    
+
+
+<div class="row m-b-lg" style="padding-bottom:30px">
+    <div class="col-lg-12 text-center">
         <div class="navy-line"></div>
-        <h1>Campaign Search Results</h1>
-        <div class="result-counter">
-            <strong class="navy">Lorem Ipsum</strong><br />
-            76,571
-        </div>
-        <div class="result-counter">
-            <strong class="navy">Dolor</strong><br />
-            9,292
-        </div>
-        <div class="result-counter">
-            <strong class="navy">Sit Amet</strong><br />
-            286
-        </div>
-        <div class="result-counter">
-            <strong class="navy">Availability</strong><br />
-            134 Available
-        </div>
-
+        <h1>D.R.E.A.M.S</h1>
+        <p>Digital | Real | Estate | Asset | Management | System</p>
     </div>
-
 </div>
-
 <div class="row">
-    <div class="col-lg-12 text-center" style="padding-bottom:160px;">
-        <div class="campaign-search-result-container hide" ng-class="{'show': model.searchResults.length > 0}"> 
-           
-
-            
-
-            <div class="campaign-search-result-item" ng-repeat="item in model.searchResults | offset: currentPage*itemsPerPage | limitTo: itemsPerPage" ">
-                <div class=" top-title"><span ng-bind="item.TopTitle"></span><div class="label pull-right" ng-class="item.TopStatusClass" ng-bind="item.TopStatusText"></div></div>
-            <div class="preview-img"><img class="img-responsive" src="{{item.ImageURL}}" /></div>
-            <div class="body-title"><span ng-bind="item.Title"></span><div class="body-title-sub" ng-bind="item.SubTitle"></div></div>
-            <div class="body-description" ng-bind="item.Description"></div>
-            <div class="body-stat"><div class="text-left">Efficitur nec</div><div class="text-right" ng-bind="item.Data1"></div></div>
-            <div class="body-stat"><div class="text-left">Porta elit</div><div class="text-right" ng-bind="item.Data2"></div></div>
-            <div class="body-stat"><div class="text-left">Porta elit</div><div class="text-right" ng-bind="item.Data3"></div></div>
+    <div class="col-sm-4 wow fadeIn animated fund-domain-col" style="visibility: visible; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+        <div class="fund-domain">
+            <img src="../Content-IFUND/img/fund-icon-1.png" class="img-responsive img-small" alt="">
+            <h4 style="margin-bottom:6px;"><span class="navy">iFUND</span>|DEBT&#0153;</h4>
+            <h5 style="margin-bottom:15px;">THE-P2P-FUND</h5>
+            <p style="max-width: 310px; margin: 0 auto 15px auto;">Personal debt consolidation loans via peer to peer funding. Get low rates. No collateral needed.</p>
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary">Learn More</a>
         </div>
-
-        <div class="text-center" style=" margin-top: 30px; margin-bottom: 60px; ">
-            <div class="btn-group">
-                <button class="btn btn-white" type="button" ng-class="prevPageDisabled()" ng-click="prevPage()"><i class=" fa fa-chevron-left"></i></button>
-                <button class="btn btn-white" ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">{{n+1}}</button>
-                <button class="btn btn-white" ng-class="nextPageDisabled()" type="button" ng-click="nextPage()"><i class=" fa fa-chevron-right"></i> </button>
-            </div>
+    </div>
+    <div class="col-sm-4 wow fadeIn animated fund-domain-col" style="visibility: visible; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+        <div class="fund-domain">
+            <img src="../Content-IFUND/img/fund-icon-2.png" class="img-responsive img-small" alt="">
+            <h4 style="margin-bottom:6px;"><span class="navy">iFUND</span>|NFP&#0153;</h4>
+            <h5 style="margin-bottom:15px;">THE-NOT-FOR-PROFIT-FUND</h5>
+            <p style="max-width: 310px; margin: 0 auto 15px auto;">Helping to improve our World, &ldquo;one&rdquo; Fund at a time. Fundraising for non-profits.</p>
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary">Learn More</a>
         </div>
-
+    </div>
+    <div class="col-sm-4 wow fadeIn animated fund-domain-col" style="visibility: visible; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+        <div class="fund-domain">
+            <img src="../Content-IFUND/img/fund-icon-3.png" class="img-responsive img-small" alt="">
+            <h4 style="margin-bottom:6px;"><span class="navy">iFUND</span>|CAPITAL&#0153;</h4>
+            <h5 style="margin-bottom:15px;">THE-EQUITY-FUND</h5>
+            <p style="max-width: 310px; margin: 0 auto 15px auto;">Venture Capitalists, Angel Investors, Start-up Seed Funding. Be-the-fuel-to-a-fire.</p>
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary">Learn More</a>
+        </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-sm-4 wow fadeIn animated fund-domain-col" style="visibility: visible; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+        <div class="fund-domain">
+            <img src="../Content-IFUND/img/fund-icon-5.png" class="img-responsive img-small" alt="">
+            <h4 style="margin-bottom:6px;"><span class="navy">iFUND</span>|REALTY&#0153;</h4>
+            <h5 style="margin-bottom:15px;">THE-REALTOR-FUND-IN-TRUST</h5>
+            <p style="max-width: 310px; margin: 0 auto 15px auto;">A stable source of money via lease and rental income. A real cash-for-life investment. In trust.</p>
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary">Learn More</a>
+        </div>
+    </div>
+    <div class="col-sm-4 wow fadeIn animated fund-domain-col" style="visibility: visible; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+        <div class="fund-domain">
+            <img src="../Content-IFUND/img/fund-icon-6.png" class="img-responsive img-small" alt="">
+            <h4 style="margin-bottom:6px;"><span class="navy">iFUND</span>|REWARDS&#0153;</h4>
+            <h5 style="margin-bottom:15px;"> THE-iFUND-A-DREAM-FOUNDATION&#0153;</h5>
+            <p style="max-width: 310px; margin: 0 auto 15px auto;">It was all a Dream. I have a Dream. I spark a Dream.</p>
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary">Learn More</a>
+        </div>
+    </div>
+    <div class="col-sm-4 wow fadeIn animated fund-domain-col" style="visibility: visible; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+        <div class="fund-domain">
+            <img src="../Content-IFUND/img/fund-icon-4.png" class="img-responsive img-small" alt="">
+            <h4 style="margin-bottom:6px;"><span class="navy">iFUND</span>|ROYALTY&#0153;</h4>
+            <h5 style="margin-bottom:15px;">THE-MEDIA-FUNDING-PLATFORM</h5>
+            <p style="max-width: 310px; margin: 0 auto 15px auto;">Performance based advertising via proprietary media buying trade desk. Get connected. Earn Affiliate Commissions Now!</p>
+            <a href="javascript:void(0);" class="btn btn-sm btn-primary">Learn More</a>
+        </div>
+    </div>
+</div>
+</div>
 
 
 
@@ -337,7 +336,8 @@
     <!-- Handler for local scripts -->
     
     <!--<script src="~/Content-IFund/js/services/references.js"></script>-->
-    <script src="/Content-IFund/js/controllers/fundSearchResultController.js"></script>
+    <script src="/Content-IFund/js/controllers/fundSearchController.js"></script>
+    <script src="/Content-IFund/js/lib/movingNodes.js"></script>
 
 
 
